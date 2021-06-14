@@ -29,26 +29,27 @@ import (
 )
 
 func main() {
-	args := os.Args
-	if len(args) < 2 || len(args) > 2 {
+	if len(os.Args) < 2 || len(os.Args) > 2 {
 		log.Fatal("Please provide a single filename or URL to check\n")
 	}
+	path := os.Args[1]
 	var (
 		content []byte
 		err     error
 	)
 	switch {
-	case IsUrl(args[1]):
-		resp, err := http.Get(args[1])
+	case IsUrl(path):
+		resp, err := http.Get(path)
 		if err != nil {
 			log.Fatalf("%v\n", err)
 		}
+		defer resp.Body.Close()
 		content, err = ioutil.ReadAll(resp.Body)
 		if err != nil {
 			log.Fatalf("%v\n", err)
 		}
 	default:
-		content, err = ioutil.ReadFile(args[1])
+		content, err = ioutil.ReadFile(path)
 		if err != nil {
 			log.Fatalf("%v\n", err)
 		}
