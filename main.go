@@ -1,3 +1,20 @@
+// Copyright Mike Hughes 2021 (mike AT mikehughes DOT info)
+//
+// Utility wrapping Google's [licensecheck](https://github.com/google/licensecheck) package.
+//
+// Accepts a single argument, either a local file or a URL.
+//
+//     lc ./PATH/TO/LICENSE
+//
+// or
+//
+//     lc https://HOSTNAME/PATH/TO/LICENSE
+//
+// example output:
+//
+//     98.8% of text covered by licenses:
+//     MIT at [13:1068]
+//
 package main
 
 import (
@@ -33,7 +50,7 @@ func main() {
 	default:
 		content, err = ioutil.ReadFile(args[1])
 		if err != nil {
-			log.Fatal(err)
+			log.Fatalf("%v\n", err)
 		}
 
 	}
